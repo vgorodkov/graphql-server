@@ -1,0 +1,17 @@
+{
+  "name": "graphql-server",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./src/index.js"
+  },
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "fastify-plugin": "^4.5.1",
+    "graphql": "^16.9.0",
+    "mercurius": "^14.1.0",
+    "nodemon": "^3.1.4"
+  }
+}
