@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-
 import { users } from '../db.js';
 import { findUserIndexById } from '../utils/findUserIndexById.js';
 
@@ -9,17 +8,21 @@ export const resolvers = {
   },
   Mutation: {
     createUser: (_, { data }) => {
-      const newUser = {
-        id: crypto.randomUUID(),
-        ...data,
-      };
-      users.push(newUser);
-      return newUser;
+      try {
+        const newUser = {
+          id: crypto.randomUUID(),
+          ...data,
+        };
+        users.push(newUser);
+        return newUser;
+      } catch (error) {
+        throw new Error(`Failed to create user: ${error.message}`);
+      }
     },
     deleteUser: (_, { id }) => {
       const indexToDelete = findUserIndexById(id);
       if (indexToDelete === -1) {
-        return `User with id ${id} was not found`;
+        throw new Error(`User with id ${id} was not found`);
       }
       users.splice(indexToDelete, 1);
       return `User with id ${id} was successfully deleted`;
@@ -29,7 +32,7 @@ export const resolvers = {
       const indexToEdit = findUserIndexById(id);
 
       if (indexToEdit === -1) {
-        return null;
+        throw new Error(`User with id ${id} was not found`);
       }
 
       users[indexToEdit] = {
