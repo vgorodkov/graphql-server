@@ -5,6 +5,14 @@ import { findUserIndexById } from '../utils/findUserIndexById.js';
 export const resolvers = {
   Query: {
     users: () => users,
+    user: (_, { id }) => {
+      const user = users.find((user) => user.id === id);
+
+      if (!user) {
+        throw new Error(`Cannot find the user`);
+      }
+      return user;
+    },
   },
   Mutation: {
     createUser: (_, { data }) => {
