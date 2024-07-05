@@ -2,7 +2,7 @@ import { buildSchema } from 'graphql';
 
 export const schema = buildSchema(`
     type Query{
-        users: [User]!
+        users(last: Int): [User]!
         user(id:ID!):User!
     }
     

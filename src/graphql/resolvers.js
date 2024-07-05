@@ -4,7 +4,12 @@ import { findUserIndexById } from '../utils/findUserIndexById.js';
 
 export const resolvers = {
   Query: {
-    users: () => users,
+    users: (_, { last }) => {
+      if (last) {
+        return users.slice(-last);
+      }
+      return users;
+    },
     user: (_, { id }) => {
       const user = users.find((user) => user.id === id);
 
